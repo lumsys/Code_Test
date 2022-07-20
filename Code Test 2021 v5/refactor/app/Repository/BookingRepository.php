@@ -58,8 +58,8 @@ class BookingRepository extends BaseRepository
     public function getUsersJobs($user_id)
     {
 
-        $cuser = User::find($user_id);
-        
+        $cuser = User::findOrFail($user_id);
+        //There is a need to validate the $user_id parse to be sure the id actually exit in the table
         $usertype = '';
         $emergencyJobs = array();
         $noramlJobs = array();
@@ -99,7 +99,8 @@ class BookingRepository extends BaseRepository
         } else {
             $pagenum = "1";
         }
-        $cuser = User::find($user_id);
+        $cuser = User::findOrFail($user_id);
+        //There is a need to validate the $user_id parse to be sure the id actually exit in the table
         $usertype = '';
         $emergencyJobs = array();
         $noramlJobs = array();

@@ -3,6 +3,7 @@
 namespace DTApi\Http\Controllers;
 
 use DTApi\Models\Job;
+use App\Helper\Reply;
 use DTApi\Http\Requests;
 use DTApi\Models\Distance;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use DTApi\Repository\BookingRepository;
 class BookingController extends Controller
 {
 
+    use Reply;
     /**
      * @var BookingRepository
      */
@@ -45,7 +47,8 @@ class BookingController extends Controller
             $response = $this->repository->getAll($request);
         }
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
     }
 
     /**
@@ -56,7 +59,8 @@ class BookingController extends Controller
     {
         $job = $this->repository->with('translatorJobRel.user')->find($id);
 
-        return response($job);
+        return response()->json(Reply::apiSuccess('', $job)->status());
+        //return response($job);
     }
 
     /**
@@ -68,8 +72,9 @@ class BookingController extends Controller
         $data = $request->all();
 
         $response = $this->repository->store($request->__authenticatedUser, $data);
-
-        return response($response);
+        
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
 
     }
 
@@ -83,8 +88,9 @@ class BookingController extends Controller
         $data = $request->all();
         $cuser = $request->__authenticatedUser;
         $response = $this->repository->updateJob($id, array_except($data, ['_token', 'submit']), $cuser);
-
-        return response($response);
+        
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
     }
 
     /**
@@ -98,7 +104,8 @@ class BookingController extends Controller
 
         $response = $this->repository->storeJobEmail($data);
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
     }
 
     /**
@@ -110,7 +117,8 @@ class BookingController extends Controller
         if($user_id = $request->get('user_id')) {
 
             $response = $this->repository->getUsersJobsHistory($user_id, $request);
-            return response($response);
+            return response()->json(Reply::apiSuccess('', $response)->status());
+            //return response($response);
         }
 
         return null;
@@ -127,7 +135,8 @@ class BookingController extends Controller
 
         $response = $this->repository->acceptJob($data, $user);
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
     }
 
     public function acceptJobWithId(Request $request)
@@ -137,7 +146,8 @@ class BookingController extends Controller
 
         $response = $this->repository->acceptJobWithId($data, $user);
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
     }
 
     /**
@@ -151,7 +161,8 @@ class BookingController extends Controller
 
         $response = $this->repository->cancelJobAjax($data, $user);
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
     }
 
     /**
@@ -164,7 +175,8 @@ class BookingController extends Controller
 
         $response = $this->repository->endJob($data);
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
 
     }
 
@@ -174,7 +186,8 @@ class BookingController extends Controller
 
         $response = $this->repository->customerNotCall($data);
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
 
     }
 
@@ -189,7 +202,8 @@ class BookingController extends Controller
 
         $response = $this->repository->getPotentialJobs($user);
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
     }
 
     public function distanceFeed(Request $request)
@@ -250,8 +264,8 @@ class BookingController extends Controller
             $affectedRows1 = Job::where('id', '=', $jobid)->update(array('admin_comments' => $admincomment, 'flagged' => $flagged, 'session_time' => $session, 'manually_handled' => $manually_handled, 'by_admin' => $by_admin));
 
         }
-
-        return response('Record updated!');
+        return response()->json(Reply::apiSuccess('Record updated!')->status());
+        //return response('Record updated!');
     }
 
     public function reopen(Request $request)
@@ -259,7 +273,8 @@ class BookingController extends Controller
         $data = $request->all();
         $response = $this->repository->reopen($data);
 
-        return response($response);
+        return response()->json(Reply::apiSuccess('', $response)->status());
+        //return response($response);
     }
 
     public function resendNotifications(Request $request)
@@ -269,7 +284,8 @@ class BookingController extends Controller
         $job_data = $this->repository->jobToData($job);
         $this->repository->sendNotificationTranslator($job, $job_data, '*');
 
-        return response(['success' => 'Push sent']);
+        return response()->json(Reply::apiSuccess('Push sent', $response)->status());
+        //return response(['success' => 'Push sent']);
     }
 
     /**
