@@ -14,7 +14,7 @@
 
 ### Structure;
 
-The structure of this codes is also amazing as it make use of repository pattern, the BaseRepository interact with the database layer while the BookingRepository houses the whole business logic of the application which interact with the controller. Repository pattern make it more easy when changing backend database to use a different technology without having to change the controller.
+The structure of this codes is also amazing as it make use of repository pattern, the BaseRepository interact with the database layer while the BookingRepository houses the whole business logic of the application which interact with the controller. Repository pattern make it more easy when changing backend database to use a different technology without having to change or affect the controller.
 
 
 ### Logic
