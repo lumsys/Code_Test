@@ -10,7 +10,7 @@
 
 1. The naming of the method parameter and varaibles used are clear and well understood, only the comment part needs to be improved on , although there are comments in the codes but it could be better. Also the code formatting in terms of the namespace and use-declaration etc obeys standard psr rules.
 
-2. THe PHP magica method __construct is well injected and declared in the BookingRepository class.
+2. THe PHP magica method __construct is well injected and declared in the BookingRepository and BookingController class.
 
 ### Structure;
 
